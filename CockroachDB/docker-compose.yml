@@ -1,0 +1,8 @@
+version: "2"
+services:
+  cockroach-db:
+    image: cockroachdb/cockroach 
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    command: start --insecure 
