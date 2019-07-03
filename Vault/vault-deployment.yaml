@@ -13,13 +13,9 @@ data:
     listener "tcp" {
       address     = "0.0.0.0:8200"
       tls_disable = 1
+      disable_mlock = true
     }
-    
-    telemetry {
-      statsite_address = "0.0.0.0:8125"
-      disable_hostname = true
-      ui = true
-    }
+    disable_mlock = true
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,7 +35,7 @@ spec:
     spec:
       containers:
       - name: vault
-        image: vault:1.1.3
+        image: quay.io/casek14/vault:11.1.3
         ports:
         - name: tcp
           containerPort: 8200
@@ -47,7 +43,8 @@ spec:
           containerPort: 8125
         volumeMounts:
         - name: config-volume
-          mountPath: /vault/config/local.json
+          mountPath: /vault/config/local.hcl
+          subPath: vault-config
       volumes:
         - name: config-volume
           configMap:
