@@ -5,4 +5,4 @@ services:
     ports:
       - "26257:26257"
       - "8080:8080"
-    command: start --insecure 
+    command: start --insecure --advertise-addr=localhost
