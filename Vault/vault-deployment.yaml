@@ -52,3 +52,18 @@ spec:
         - name: config-volume
           configMap:
             name: vault-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vault-service
+spec:
+  selector:
+    app: vault
+  ports:
+  - name: vault
+    protocol: TCP
+    port: 8200
+  - name: telemetry
+    protocol: TCP
+    port: 8125
