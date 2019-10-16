@@ -1,0 +1,53 @@
+//Generate workflow definition for argo ci to run basic hello world with custom string 
+{
+  //Required argument
+  workflowName:: error "You need to specify workflow name", 
+  sayArgument:: error "You need to specify string to be printed",
+  
+  //Optional arguments
+  namespaceName:: "default",
+  resources:: {
+    requests: {
+      memory: "20Mi"
+    }
+  },
+
+  //Define a workflow definition
+  local workflow = {
+      entrypoint: "sayit",
+      arguments: {
+        parameters: [
+          {
+            name: "word",
+            value: $.sayArgument,
+          }, 
+        ],
+      },
+      templates: [
+        {
+          name: "sayit",
+          inputs: {
+            parameters: [
+              {
+                name: "word",
+              }
+            ]  
+          }
+          container: {
+            image: "docker/whalesay:latest",
+            command: ["cowsay"],
+            args: ["{{inputs.parameters.word}}"],
+          },
+        },
+      ],
+  },
+  
+  apiVersion: "argoproj.io/v1alpha1",
+  kind: "Workflow",
+  metadata: {
+    generateName: $.workflowName,
+//    namespace: $.namespaceName,
+  },
+  spec: workflow
+  
+}
