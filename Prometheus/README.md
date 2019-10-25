@@ -1,7 +1,7 @@
-#Prometheus
+# Prometheus
 Repo to learn and play with Prometheus
 
-###Prerequisities:
+### Prerequisities:
 Install minikube with docker (ubuntu machine):
 
 	apt update && apt -y install docker.io
@@ -34,7 +34,7 @@ Should look like this:
 	kube-scheduler-minikube            1/1     Running   0          30s
 	storage-provisioner                1/1     Running   0          93s
 
-##How to run demo:
+## How to run demo:
 ### 1. create prometheus config:
 	kubectl create configmap prometheus-example-cm --from-file prometheus-config.yml
 

@@ -30,9 +30,9 @@ scrape_configs:
 
   # scrape example app, can be created by deploy-app.yaml
   - job_name: 'example_app'
-    static_config:
+    static_configs:
     - targets: ['example-app01:8080']
 
   - job_name: 'traefik'
-    static_config:
+    static_configs:
     - targets: ['traefik:8080']
