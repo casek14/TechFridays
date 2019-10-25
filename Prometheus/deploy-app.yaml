@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-app01
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: example-app01
+  template:
+    metadata:
+      labels:
+        app: example-app01
+    spec:
+      containers:
+      - name: example-app01
+        image: fabxc/instrumented_app
+        ports:
+        - name: web
+          containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: example-app01
+  labels:
+    app: example-app01
+spec:
+  selector:
+    app: example-app01
+  ports:
+  - name: web
+    port: 8080
+  type: NodePort
