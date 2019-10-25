@@ -62,18 +62,20 @@ metadata:
   name: traefik-conf
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   name: traefik-ingress-controller
   labels:
     k8s-app: traefik-ingress-lb
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: traefik-ingress-lb
   template:
     metadata:
       labels:
         k8s-app: traefik-ingress-lb
-        name: traefik-ingress-lb
     spec:
       serviceAccount: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
@@ -82,7 +84,7 @@ spec:
           configMap:
             name: traefik-conf
       containers:
-        - image: traefik
+        - image: traefik:1.7
           name: traefik-ingress-lb
           imagePullPolicy: Always
           volumeMounts:
@@ -121,3 +123,4 @@ spec:
     targetPort: 8080
   selector:
     k8s-app: traefik-ingress-lb
+  type: LoadBalancer
