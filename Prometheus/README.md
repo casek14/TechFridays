@@ -40,3 +40,8 @@ Should look like this:
 
 ### 2. create prometheus server with created configuration:
 	kubectl create -f prometheus-deployment.yaml	
+
+This should start prometheus server and expose prometheus ports
+
+### 3. create test deployment which expose metrics
+	kubectl create -f deploy-app.yaml
