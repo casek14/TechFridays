@@ -1,0 +1,12 @@
+global:
+  resolve_timeout: 5m
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'casek-test'
+receivers:
+  - name: 'casek-test'
+    webhook_configs:
+    - url: 'https://webhook.site/4212f435-aa87-45c9-bc43-bd4cebcd5dc7'
