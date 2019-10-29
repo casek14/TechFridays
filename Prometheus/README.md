@@ -34,7 +34,7 @@ Should look like this:
 	kube-scheduler-minikube            1/1     Running   0          30s
 	storage-provisioner                1/1     Running   0          93s
 
-## How to run demo:
+## How to deploy prometheus demo:
 ### 1. create prometheus config:
 	kubectl create configmap prometheus-example-cm --from-file prometheus-config.yml
 
@@ -45,3 +45,16 @@ This should start prometheus server and expose prometheus ports
 
 ### 3. create test deployment which expose metrics
 	kubectl create -f deploy-app.yaml
+
+## Deploy Alert Manager with prometheus:
+### 1. Create config maps for prometheus and for alert manager
+	kubectl create cm prometheus-example-cm --from-file prometheus-config.yml
+	kubectl create cm prometheus-rules-general --from-file generalrules.yaml
+	kubectl create cm alertmanager-config --from-file alertmanager.yml
+
+
+### 2. Deploy prometheus server and alert manager
+	kubectl create -f prometheus-deployment.yaml -f alertmanager-deployment.yaml
+
+Prometheus server and Alert manager pods should be in running state.
+
