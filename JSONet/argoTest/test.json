@@ -1,0 +1,62 @@
+{
+   "apiVersion": "argoproj.io/v1alpha1",
+   "kind": "Workflow",
+   "metadata": {
+      "generateName": "casek-iterate-over-template-names-"
+   },
+   "spec": {
+      "arguments": {
+         "parameters": [
+            {
+               "name": "casek-echo-test",
+               "value": "casek-echo-test"
+            },
+            {
+               "name": "test-number-2",
+               "value": "test-number-2"
+            }
+         ]
+      },
+      "entrypoint": "sayit-casek-echo-test",
+      "templates": [
+         {
+            "container": {
+               "args": [
+                  "{{inputs.parameters.casek-echo-test}}"
+               ],
+               "command": [
+                  "cowsay"
+               ],
+               "image": "docker/whalesay:latest"
+            },
+            "inputs": {
+               "parameters": [
+                  {
+                     "name": "casek-echo-test"
+                  }
+               ]
+            },
+            "name": "sayit-casek-echo-test"
+         },
+         {
+            "container": {
+               "args": [
+                  "{{inputs.parameters.test-number-2}}"
+               ],
+               "command": [
+                  "cowsay"
+               ],
+               "image": "docker/whalesay:latest"
+            },
+            "inputs": {
+               "parameters": [
+                  {
+                     "name": "test-number-2"
+                  }
+               ]
+            },
+            "name": "sayit-test-number-2"
+         }
+      ]
+   }
+}

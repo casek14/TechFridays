@@ -1,0 +1,81 @@
+//Generate workflow definition for argo ci to run basic hello world with custom string 
+{
+  //Required argument
+  templateNames:: error "You need to specify template names in list [a, b]", 
+  workflowName:: error "You need to specify workflow name to be used",
+  
+  //Optional arguments
+  namespaceName:: "default",
+  resources:: {
+    requests: {
+      memory: "20Mi"
+    }
+  },
+
+  //Define a workflow definition
+  local workflow = {
+      entrypoint: "hou-hou-hou",
+      arguments: {
+        parameters: [
+          {
+            name: n.name,
+            value: n.name,
+          },
+          for n in $.templateNames
+        ]
+      },
+      templates: [
+        {
+          name: "sayit",
+          inputs: {
+            parameters: [
+            {
+              name: "message",
+            },
+            ]  
+          }
+          container: {
+            image: "docker/whalesay:latest",
+            command: ["cowsay"],
+            args: ["{{inputs.parameters.message}}"],
+          },
+        },
+        {
+        name: "hou-hou-hou",
+        steps:
+          [
+              [
+                {   
+                  name: n.name, 
+                  template: "sayit",
+                  arguments: 
+                  { 
+                    parameters:
+                    [
+                      {
+                        name: "message",
+                        value: n.message,
+                      },
+                    ]
+                  }
+                }
+              ]
+              for n in $.templateNames
+          ]
+        }
+      ],
+  },
+
+  local gen = {
+
+  }
+  
+  apiVersion: "argoproj.io/v1alpha1",
+  kind: "Workflow",
+  metadata: {
+    generateName: $.workflowName,
+//    namespace: $.namespaceName,
+  },
+  spec: workflow
+  
+}
