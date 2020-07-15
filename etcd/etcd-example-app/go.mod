@@ -13,6 +13,7 @@ require (
 	github.com/google/uuid v1.1.1 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
+	go.etcd.io/etcd v3.3.22+incompatible // indirect
 	go.etcd.io/etcd/v3 v3.3.0-rc.0.0.20200710174459-07461ecc8c03 // indirect
 	go.uber.org/zap v1.15.0 // indirect
 )
